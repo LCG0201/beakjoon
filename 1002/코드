@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+import java.lang.Math;
+
+public class Main {
+    public void Rdin() throws IOException {
+        BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+        BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+        int num = Integer.parseInt(rdin.readLine());
+        double[] dataset = new double[6];
+        for(int i=0; i<num; i++){
+            String line = rdin.readLine();
+            StringTokenizer data = new StringTokenizer(line);
+            for(int i2=0; i2<6; i2++){
+                dataset[i2]=Integer.parseInt(data.nextToken());
+            }
+            double distToteam = Math.sqrt(Math.pow(dataset[0]-dataset[3],2)+Math.pow(dataset[1]-dataset[4],2));
+            double r=dataset[2]+dataset[5];
+            if(distToteam==0 & dataset[2]!=dataset[5]){rdout.write("0\n");}
+            else if(distToteam==0 & dataset[2]==dataset[5]){rdout.write("-1\n");}
+            else if(distToteam!=0 & distToteam+dataset[2]==dataset[5]){rdout.write("1\n");}
+            else if(distToteam!=0 & distToteam+dataset[5]==dataset[2]){rdout.write("1\n");}
+            else if(distToteam!=0 & distToteam+dataset[2]<dataset[5]){rdout.write("0\n");}
+            else if(distToteam!=0 & distToteam+dataset[5]<dataset[2]){rdout.write("0\n");}
+            else if(distToteam<r){rdout.write("2\n");}
+            else if(distToteam==r){rdout.write("1\n");}
+            else if(distToteam>r){rdout.write("0\n");}
+            
+        }
+
+        rdout.close();
+    
+
+    }
+    public static void main(String[] args) throws IOException {
+        new Main().Rdin();
+        
+    }
+    
+}
