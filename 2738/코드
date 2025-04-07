@@ -1,0 +1,67 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+//행 X 열 을 크기로 가진 1차원 array로 행렬 A, B를 1차원 화 해서 입력 받는다. 이후 2차원 행렬로 만들고 덧셈셈
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+    //2차원 행렬 만들기
+    public static int[][] twoMatrixArr(int column, int row, int elements[]) {
+        int[][] ansArr = new int[column][row];
+        int index = 0;
+        for(int c=0; c<column; c++){
+            for(int r=0; r<row; r++){
+                ansArr[c][r] = elements[index];
+                index++;
+            }
+        }
+        return ansArr;
+    }
+    //1차원 데이터 정렬
+    public static int[] makeElement(int column, int row) throws IOException{
+        int[] elements = new int[column*row];
+        int index = 0;
+        for(int i=0; i<column; i++){
+            String rowNum = rdin.readLine();
+            StringTokenizer element = new StringTokenizer(rowNum);
+            for(int ii=0; ii<row; ii++){
+                elements[index] = Integer.parseInt(element.nextToken());
+                index++;
+            }
+        }
+        return elements;
+    }
+    
+    public static void main(String[] args) throws IOException {
+        StringTokenizer data = new StringTokenizer(rdin.readLine());
+        Integer column = Integer.parseInt(data.nextToken());
+        Integer row = Integer.parseInt(data.nextToken());
+        
+        int[] element1 = makeElement(column, row);
+        int[][] arr1 = twoMatrixArr(column, row, element1);
+        int[] element2 = makeElement(column, row);
+        int[][] arr2 = twoMatrixArr(column, row, element2);
+
+        int[][] ans = new int[column][row];
+        //ans행렬을 만들 필요 없이 바로 출력해도 되지만 정답 행렬을 만들고 싶었음..
+        for(int a=0; a<column; a++){
+            for(int b=0; b<row; b++){
+                ans[a][b] = arr1[a][b]+arr2[a][b];
+            }
+        }
+        for(int printy=0; printy<column; printy++){
+            for(int printx=0; printx<row; printx++){
+                rdout.write(Integer.toString(ans[printy][printx]));
+                rdout.write(" ");
+            }
+        rdout.write("\n");
+        }
+
+        rdout.close();        
+    }
+}
