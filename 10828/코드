@@ -1,0 +1,63 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+import java.lang.Math;
+import java.util.ArrayList;
+
+public class Main {
+    static ArrayList<String> strStack = new ArrayList<>();
+    public static String stack(String s, String n) {
+        
+        if(s.equals("push")){
+            strStack.add(n);
+            return "";
+        }
+        else if(s.equals("pop")){
+            if(strStack.size()!=0){
+                String removed = strStack.get(strStack.size()-1);
+                strStack.remove(strStack.size()-1);
+                return removed;
+            }else{return "-1";}
+        }
+        else if(s.equals("size")){
+            String size = Integer.toString(strStack.size());
+            return size;
+        }
+        else if(s.equals("empty")){
+            if(strStack.size() == 0){return "1";}
+            else{return "0";}
+        }
+        else if(s.equals("top")){
+            if(strStack.size() == 0){return "-1";}
+            else{return strStack.get(strStack.size()-1);}
+        }
+        else{  
+            return "";
+        }
+    }
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+        BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+        int num = Integer.parseInt(rdin.readLine());
+        for(int i=0; i<num; i++){
+            String str = rdin.readLine();
+            StringTokenizer data = new StringTokenizer(str);
+            String order = data.nextToken();
+            String x = "";
+            if(data.hasMoreTokens()){
+                x = data.nextToken();
+            }
+            String ans = stack(order, x);
+            if(ans !=""){
+                rdout.write(ans);
+                rdout.write("\n");
+            }
+        }
+        rdout.close();        
+    }
+
+}
