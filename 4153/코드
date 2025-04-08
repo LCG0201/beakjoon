@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+    public static void main(String[] args) throws IOException {
+        while(true){
+            StringTokenizer data = new StringTokenizer(rdin.readLine());
+            int[] arr = new int[3];
+            for(int i =0; i <3; i++){
+                arr[i] = Integer.parseInt(data.nextToken());
+            }
+    
+            String ans = "wrong";
+            for(int ia =0; ia <3; ia++){
+                if(arr[0]*arr[0] + arr[1]*arr[1] + arr[2]*arr[2] == arr[ia]*arr[ia]*2){ans = "right";}
+            }
+    
+            if(arr[0]==0 && arr[1]==0 && arr[2]==0 ){break;}
+            rdout.write(ans);
+            rdout.write("\n");
+        }
+        rdout.close();  
+  
+    }
+}
