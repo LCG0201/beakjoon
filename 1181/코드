@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+import java.lang.StringBuilder;
+import java.util.HashMap;
+import java.util.Arrays;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static Double tokey(String str){                    //단어의 고유 ID만들기(숫자가 작을수록 사전상 앞에위치)
+        char[] chararr = str.toCharArray();
+        StringBuilder ans = new StringBuilder();
+        
+        for(char i : chararr){
+            int tochar = (int)i-86;
+            ans.append(tochar);
+        }
+        Double out = Double.parseDouble(ans.toString());
+        return out;
+    }
+    public static void main(String[] args) throws IOException {
+        int num =Integer.parseInt(rdin.readLine());
+        HashMap<Double,String> map = new HashMap<>();
+        for(int i=0; i<num; i++){
+            String str = rdin.readLine();
+            map.put(tokey(str),str);
+        }
+
+        Double[] arrlist_key = map.keySet().toArray(new Double[0]);
+        Arrays.sort(arrlist_key);
+            for(Double key:arrlist_key){
+                rdout.write(map.get(key));
+                rdout.write("\n");
+            }
+        
+        
+        rdout.close();  
+  
+    }
+}
