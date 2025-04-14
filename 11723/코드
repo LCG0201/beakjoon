@@ -1,0 +1,48 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+    static Set<Integer> S = new HashSet<Integer>();
+
+    public static void cal() throws IOException{
+        StringTokenizer st = new StringTokenizer(rdin.readLine());
+        String cmd = st.nextToken().toString();
+        if(cmd.equals("add")){
+            S.add(Integer.parseInt(st.nextToken()));
+        }
+        if(cmd.equals("remove")){
+            S.remove(Integer.parseInt(st.nextToken()));
+        }
+        if(cmd.equals("check")){
+            if(S.contains(Integer.parseInt(st.nextToken()))){rdout.write("1\n");}
+            else{rdout.write("0\n");}
+        }
+        if(cmd.equals("toggle")){
+            int n =Integer.parseInt(st.nextToken());
+            if(S.contains(n)){S.remove(n);}
+            else{S.add(n);}
+        }
+        if(cmd.equals("all")){
+            S.clear();
+            for(int i=1; i<21; i++){S.add(i);}
+        }
+        if(cmd.equals("empty")){
+            S.clear();;
+        }else{}
+    }
+    public static void main(String[] args) throws IOException {
+        int n =Integer.parseInt(rdin.readLine());
+        for(int i=0; i<n; i++){
+            cal();
+        }
+        rdout.close();
+    }
+}
