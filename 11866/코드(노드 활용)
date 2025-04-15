@@ -1,0 +1,68 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    
+    
+
+    public static void main(String[] args) throws IOException {
+        circleNode datalist = new circleNode();
+        StringTokenizer data = new StringTokenizer(rdin.readLine());
+        int n = Integer.parseInt(data.nextToken());
+        int k = Integer.parseInt(data.nextToken());
+        for(int i =n; i>0; i--){
+            datalist.add(i);
+        }
+        
+        System.out.println(datalist.tostr(k));
+        
+    }
+}
+
+class circleNode{
+    private class Node{
+        int data;
+        Node next;
+        public Node(int data){
+            this.data=data;
+            this.next=null;
+        }
+    }
+    private Node head;
+    private Node tail;
+    private int size =0;
+    public void add(int data){
+        Node newNode = new Node(data);
+        newNode.next = head;
+        head = newNode;
+        if(head.next == null){
+            tail = head;
+        }
+        tail.next = head;
+        size=size+1;
+    }
+    public String tostr(int k){
+        Node temp = head;
+        String str = "<";
+        while(temp!=temp.next){
+            for(int i =1;i<k-1+size;i++){
+                temp = temp.next;
+            }
+            str=str+temp.next.data + ", ";
+            temp.next = temp.next.next;
+            size=size-1;
+            temp = temp.next;
+        }
+        str=str+temp.data+">";
+        return str;
+    }
+}
