@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+import java.util.Arrays;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+        StringTokenizer data = new StringTokenizer(rdin.readLine());
+        int N = Integer.parseInt(data.nextToken());
+        int M = Integer.parseInt(data.nextToken());
+        StringTokenizer cards = new StringTokenizer(rdin.readLine());
+        int[] setarr = new int[N];        
+        for(int i =0; i<N;i++){
+            setarr[i]=(Integer.parseInt(cards.nextToken()));
+        }
+        Arrays.sort(setarr);
+        int largestindex = N-1;
+        // 아래는 가장 큰 숫자와 가장 작은 두숫자를 더해 큰숫자가 M을 넘는지를 판단해 추후 3중 for문 계산에서 제외하는 코드 -> 이를 통해 삼중 for문의 계산수를 조금이라도 줄이려 했다
+        while(setarr[0]+setarr[1]+setarr[largestindex]>M){
+            setarr[largestindex] = -1;
+            largestindex=largestindex-1;
+        }
+        int ans =0;
+        for(int large=largestindex; large>1; large--){
+            for(int small=0; small<large-1; small++){
+                for(int middle=small+1; middle<large; middle++){
+                    int sum =setarr[large]+setarr[middle]+setarr[small];
+                    if(sum>M){break;}
+                    if(sum<=M && ans<sum){ans=sum;}
+                }
+            }
+        }
+        rdout.write(Integer.toString(ans));
+        rdout.close();
+        
+    }
+}
