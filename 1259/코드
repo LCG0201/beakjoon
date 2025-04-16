@@ -1,0 +1,30 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+import java.util.Arrays;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+        while(true){
+            String input = rdin.readLine();
+            if(input.equals("0")){break;}
+            String[] strarr =input.split("");
+            String ans = "yes";
+            for(int i =0; i<=strarr.length/2;i++){
+                if(Integer.parseInt(strarr[i])!=Integer.parseInt(strarr[strarr.length-1-i])){ans="no";}
+            }
+            rdout.write(ans);
+            rdout.write("\n");
+
+        }
+        
+        rdout.close();
+        
+    }
+}
