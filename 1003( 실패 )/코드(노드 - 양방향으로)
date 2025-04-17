@@ -1,0 +1,85 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+        int N = Integer.parseInt(rdin.readLine());
+        int[] toNarr = new int[N];
+        for(int i=0; i<N; i++){
+            toNarr[i]=Integer.parseInt(rdin.readLine());
+        }
+        int maxtoN =Arrays.stream(toNarr).max().orElse(0);
+        fibonaci fibo = new fibonaci();
+        fibo.addNode(maxtoN);
+        for(int i=0; i<N; i++){
+            fibo.getNode(toNarr[i]);
+            rdout.write(Integer.toString(fibo.call0()));
+            rdout.write(" ");
+            if(toNarr[i]==0){rdout.write("0");}
+            else{rdout.write(Integer.toString(fibo.call1()));}
+            rdout.write("\n");
+        }    
+        rdout.close();
+        
+    }
+}
+
+class fibonaci {
+    private Node head;
+    private Node tail;
+    private class Node<Integer>{
+        int data=-1;
+        int callnum;
+        int index;
+        Node next = null;
+        Node previous = null;
+        Node(int data, int indexN){
+            this.index = indexN;
+            this.callnum = 0;
+            this.data =data;
+            this.next =null;
+            this.previous =null;
+        }
+    }
+    public void addNode(int toN){
+        int data =-1;
+        Node<Integer> firstNode = new Node<Integer>(0, 0);
+        tail = firstNode;
+        head = firstNode;
+
+        for(int i =1; i<toN+1; i++){
+            Node<Integer> newNode = new Node<Integer>(data, i);
+            tail.next = newNode;
+            newNode.previous = tail;
+            tail = newNode;
+            if(i==1){newNode.data = 1;}
+            else{
+                newNode.data = newNode.previous.data + newNode.previous.previous.data;
+            }
+        }
+    }
+    public int getNode(int indexN){
+        if(indexN ==0){head.callnum++;return 0;}
+        if(indexN ==1){head.next.callnum++;return 1;}
+        int ans = getNode(indexN-1)+getNode(indexN-2);
+        return ans;
+    }
+    public int call0(){
+        int ans =head.callnum;
+        head.callnum =0;
+        return ans;
+    }
+    public int call1(){
+        int ans =head.next.callnum;
+        head.next.callnum =0;
+        return ans;
+    }
+}
+
