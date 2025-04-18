@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+        int x = Integer.parseInt(rdin.readLine());
+        for(int ii =0; ii<x; ii++){
+            int N = Integer.parseInt(rdin.readLine());
+            if(N==0){
+                rdout.write("1");
+                rdout.write(" ");
+                rdout.write("0");
+                rdout.write("\n");
+                continue;
+            }
+            int[] dp = new int[N+1];
+            dp[0] =0;
+            dp[1] =1;
+            for(int i = 2; i<N+1; i++){
+                dp[i] = dp[i-1]+dp[i-2];
+            }
+            rdout.write(Integer.toString(dp[N-1]));
+            rdout.write(" ");
+            rdout.write(Integer.toString(dp[N]));
+            rdout.write("\n");
+        }
+        rdout.close();
+        
+    }
+}
