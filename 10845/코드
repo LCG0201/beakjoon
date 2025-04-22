@@ -1,0 +1,94 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+
+        int N = Integer.parseInt(rdin.readLine());
+        int input =0;
+        que func = new que();
+        for(int i = 0; i<N; i++){
+            StringTokenizer data = new StringTokenizer(rdin.readLine());
+            String cmd = data.nextToken();
+            if(data.hasMoreTokens()){input = Integer.parseInt(data.nextToken());}
+            if(cmd.equals("push")){func.push(input);}
+            else if(cmd.equals("pop")){rdout.write(Integer.toString(func.pop())+"\n");}
+            else if(cmd.equals("size")){rdout.write(Integer.toString(func.size())+"\n");}
+            else if(cmd.equals("empty")){rdout.write(Integer.toString(func.empty())+"\n");}
+            else if(cmd.equals("front")){rdout.write(Integer.toString(func.front())+"\n");}
+            else if(cmd.equals("back")){rdout.write(Integer.toString(func.back())+"\n");}
+            else{rdout.write("error");}
+        }
+        rdout.close();
+    }
+    public static class que{
+        private Node head =null;
+        private Node tail =null;
+        private int size =0;
+        private class Node{
+            private int data;
+            private Node next;
+            private Node previous;
+            private Node(int input){
+                this.data = input;
+                this.next = null;
+                this.previous = null;
+            }
+        }
+        public void push(int input){
+            Node temp =new Node(input);
+            if(head == null){tail = temp;}
+            temp.next = head;
+            head = temp;
+            if(head.next != null){temp.next.previous = temp;}
+            size++;
+        }
+        public int pop() throws IOException{
+            if(size <=0){return -1;}
+            else{
+                int out = tail.data;
+                if(size ==1){
+                    head=null;
+                    tail=null;
+                    size--;
+                    return out;
+                }
+                tail = tail.previous;
+                tail.next =null;
+                size--;
+                return out;
+            }
+        }
+        public int size(){
+            return size;
+        }
+        public int empty(){
+            if(tail == null){return 1;}
+            else{return 0;}
+        }
+        public int front(){
+            if(tail==null){return -1;}
+            else{return tail.data;}
+        }
+        public int back(){
+            if(tail==null){return -1;}
+            else{return head.data;}
+        }
+        public String toString(){
+            if(head ==null){return "[]";}
+            Node temp = head;
+            String str = "[";
+            while(temp.next != null){str+= temp.data +", ";temp = temp.next;}
+            str+= temp.data;
+            return str+"]";
+        }
+    }
+}
+
