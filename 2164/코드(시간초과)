@@ -1,0 +1,31 @@
+//set을 사용해 que를 쓰려고생각했지만 갯수가 많을 수록 마지막 자리에 넣는 경우 앞에서 인덱스를 읽어나가 느리다
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+import java.util.List;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+        int N = Integer.parseInt(rdin.readLine());
+        List<Integer> deck = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            deck.add(i+1);
+        }
+        for (int i = 0; i < N-1; i++) {
+            deck.remove(0);
+            deck.add(deck.get(0));
+            deck.remove(0);
+        }
+        rdout.write(Integer.toString(deck.get(0)));
+        rdout.close();    
+    }
+}
