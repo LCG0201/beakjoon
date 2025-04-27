@@ -1,0 +1,28 @@
+//LinkedList를 사용한 Que라이브러리를 사용 시간이 획기적으로 줄어든 것을 알 수 있다
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+        int N = Integer.parseInt(rdin.readLine());
+        Queue<Integer> deck = new LinkedList<>();
+        for (int i = 0; i < N; i++) {
+            deck.offer(i+1);
+        }
+        for (int i = 0; i < N-1; i++) {
+            deck.poll();
+            deck.offer(deck.poll());
+        }
+        rdout.write(Integer.toString(deck.poll()));
+        rdout.close();    
+
+    }
+}
