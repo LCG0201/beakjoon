@@ -1,0 +1,79 @@
+// 최소힙이 아닌 그 무언가를 만들었다. 첫 값보다 크면 오른쪽 작으면 왼쪽으로 값을 추가하는 트리를 만들었지만 값이 큰수부터 작은수로 정렬되면 노드 마지막을 찾아서 가는 시간이 너무 길어 시간 초과로 틀리게 되었다.
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class Main {
+    public static BufferedReader rdin = new BufferedReader( new InputStreamReader(System.in));
+    public static BufferedWriter rdout = new BufferedWriter( new OutputStreamWriter(System.out));
+
+    public static void main(String[] args) throws IOException {
+        int num = Integer.parseInt(rdin.readLine());
+        heap hip = new heap();
+        int write;
+        for (int i = 0; i < num; i++) {
+            int N = Integer.parseInt(rdin.readLine());
+            write = hip.doit(N);
+            if(write>=0){rdout.write(Integer.toString(write)+"\n");}
+        }
+        
+        rdout.close();    
+
+    }
+}
+
+class heap{
+    private Node head=null;
+    private Node bigger;
+    private Node smaller;
+    private Node upper;
+    private class Node{
+        private Node bigger;
+        private Node smaller;
+        private Node upper;
+        private int data;
+        public Node(int input){
+            this.data=input;
+            this.bigger=null;
+            this.smaller=null;
+            this.upper=null;
+        }
+    }
+    public Integer doit(int N){
+        Node temp = head;
+        if(N==0){
+            if(head==null){return 0;}
+            while(temp.smaller!=null){
+                temp = temp.smaller;
+            }
+            int ans =temp.data;
+            if(temp.upper==null){head=head.bigger;return ans;}
+            if(temp.bigger!=null){
+                temp=temp.upper;
+                temp.smaller=temp.smaller.bigger;
+                temp.smaller.upper = temp;
+            }else{temp.upper.smaller = null;}
+            return ans;
+        }
+        else{
+            Node newNode = new Node(N);
+            if(head==null){
+                head=newNode;
+            }else{
+                temp = head;
+                while(true){
+                    if(N >=temp.data){
+                        if(temp.bigger==null){temp.bigger = newNode;newNode.upper = temp;break;}
+                        temp = temp.bigger;
+                    }else{
+                        if(temp.smaller==null){temp.smaller = newNode;newNode.upper = temp;break;}
+                        temp = temp.smaller;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+}
